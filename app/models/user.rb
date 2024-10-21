@@ -1,7 +1,10 @@
 class User < ApplicationRecord
     has_secure_password
     
-    validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+    validates :email, presence: true, uniqueness: true, format: { 
+        with: /\A(?!.*@.*@)(?!.*@.*\..*\.)[a-zA-Z0-9._%+-]{3,}@[a-zA-Z0-9.-]{3,}\.[a-zA-Z]{2,}\z/,
+        message: "must be valid and meet our requirements" 
+      }
     
     before_validation :normalize_email
 
